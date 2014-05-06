@@ -10,7 +10,7 @@ public class LevelController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		aFlag = Instantiate (flag) as GameObject;
-		iTween.PutOnPath (aFlag, iTweenPath.GetPath ("enemy_path_1"), .95f);
+		iTween.PutOnPath (aFlag, iTweenPath.GetPath ("enemy_path_main"), .95f);
 	}
 	
 	// Update is called once per frame
