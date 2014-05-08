@@ -25,7 +25,8 @@ public class EnemyMovement : MonoBehaviour
 
 				iTween.PutOnPath (gameObject, aPath, 0f);
 
-				Invoke("revertPath", 10);
+				//Invoke("revertPath", 10);
+            
 		}
 
 		void revertPath ()

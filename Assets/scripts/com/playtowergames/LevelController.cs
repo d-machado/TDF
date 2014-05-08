@@ -5,12 +5,12 @@ public class LevelController : MonoBehaviour {
 
 	public GameObject flag;
 
-	private GameObject aFlag;
-
+	private GameObject aFlagInstance;
+    
 	// Use this for initialization
 	void Start () {
-		aFlag = Instantiate (flag) as GameObject;
-		iTween.PutOnPath (aFlag, iTweenPath.GetPath ("enemy_path_main"), .95f);
+		aFlagInstance = Instantiate (flag) as GameObject;
+        iTween.PutOnPath (aFlagInstance, iTweenPath.GetPath ("enemy_path_main"), .95f);
 	}
 	
 	// Update is called once per frame
