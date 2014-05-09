@@ -5,6 +5,7 @@ public class EnemyMovement : MonoBehaviour
 {
 
 		public float Speed = 1f;
+        public string Path = "enemy_path_1";
 		private Hashtable mTweenArgs = null;
 		private float mPathPercentageByFrame = 1f;
 		private float mCurrentPathPercentage = 0f;
@@ -14,20 +15,24 @@ public class EnemyMovement : MonoBehaviour
 		void Start ()
 		{
 
-				Vector3[] aPath = iTweenPath.GetPath ("enemy_path_1");
-
-				mPathPercentageByFrame = (Speed / 1000) / aPath.Length;
-
-				mTweenArgs = new Hashtable ();
-				mTweenArgs.Add ("path", aPath);
-				mTweenArgs.Add ("speed", Speed);
-				mTweenArgs.Add ("easetype", iTween.EaseType.linear);
-
-				iTween.PutOnPath (gameObject, aPath, 0f);
-
-				//Invoke("revertPath", 10);
-            
 		}
+
+        public void putOnPath(string pPath = "", float pStartPercentage = 0f)
+        {
+            if (pPath == "") { pPath = Path; }
+            Path = pPath;
+
+            Vector3[] aPath = iTweenPath.GetPath(Path);
+
+            mPathPercentageByFrame = (Speed / 1000) / aPath.Length;
+
+            mTweenArgs = new Hashtable();
+            mTweenArgs.Add("path", aPath);
+            mTweenArgs.Add("speed", Speed);
+            mTweenArgs.Add("easetype", iTween.EaseType.linear);
+
+            iTween.PutOnPath(gameObject, aPath, pStartPercentage);
+        }
 
 		void revertPath ()
 		{
@@ -53,7 +58,7 @@ public class EnemyMovement : MonoBehaviour
 			if (mCurrentPathPercentage >= 1) {
 				mCurrentPathPercentage = 1f;
 			}
-			iTween.PutOnPath (gameObject, iTweenPath.GetPath ("enemy_path_1"), mCurrentPathPercentage);
+			iTween.PutOnPath (gameObject, iTweenPath.GetPath (Path), mCurrentPathPercentage);
 		}
 
 		void returningUpdate ()
@@ -62,6 +67,6 @@ public class EnemyMovement : MonoBehaviour
 			if (mCurrentPathPercentage <= 0) {
 				mCurrentPathPercentage = 0f;
 			}
-			iTween.PutOnPath(gameObject, iTweenPath.GetPath("enemy_path_1"), mCurrentPathPercentage);
+			iTween.PutOnPath(gameObject, iTweenPath.GetPath(Path), mCurrentPathPercentage);
 		}
 }
