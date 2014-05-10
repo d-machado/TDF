@@ -7,6 +7,8 @@ public class WaveController : MonoBehaviour {
     public Wave[] Waves;
 
     private LevelController mLevelController;
+    private System.Random mRandom = new System.Random();
+    private int mCurrentWaveIndex = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -22,30 +24,52 @@ public class WaveController : MonoBehaviour {
 
     private void showFirstWave()
     {
+
         if(Waves.Length > 0){
+
             Wave aWave = Waves[0];
-            startWave(aWave);
+            startWave();
+        }
+
+    }
+
+    private void showNextWave()
+    {
+        if (mCurrentWaveIndex >= Waves.Length)
+        {
+            Debug.Log("Survived to invasion");
+        }
+        else
+        {
+            Wave aNextWave = Waves[mCurrentWaveIndex];
+            Invoke("startWave", aNextWave.StartTime);
         }
     }
 
-    private void startWave(Wave aWave)
+    private void startWave()
     {
-        
+
+        Wave aWave = Waves[mCurrentWaveIndex];
         Dictionary<string, iTweenPath> aPaths = iTweenPath.paths;
 
         for (int i = 0; i < aWave.AmountOfEnemies; i++)
         {
             GameObject aEnemy = mLevelController.GetNewInstanceOfEnemy(aWave.TypeOfEnemies);
             EnemyMovement aEnemyMovement = aEnemy.GetComponent<EnemyMovement>();
+            
 
-            System.Random aRandom = new System.Random();
-            int aPathIndex = aRandom.Next(aPaths.Count);
+            
+            int aPathIndex = mRandom.Next(aPaths.Count);
             string[] keys = new string[aPaths.Count];
             aPaths.Keys.CopyTo(keys, 0);
 
-            float aStartPercentage = (float)(aRandom.NextDouble() * 10d);
+            Debug.Log("Path Index: " + aPathIndex);
 
+            float aStartPercentage = (float)(mRandom.Next(10) / 100f);
+            Debug.Log(aStartPercentage);
             aEnemyMovement.putOnPath(keys[aPathIndex], aStartPercentage);
         }
+        mCurrentWaveIndex++;
+        showNextWave();
     }
 }

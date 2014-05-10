@@ -4,6 +4,9 @@ using System.Collections;
 public class EnemyMovement : MonoBehaviour
 {
 
+        public delegate void EnemyInvasionHandler();
+        public event EnemyInvasionHandler OnEnemyInvasion;
+
 		public float Speed = 1f;
         public string Path = "enemy_path_1";
 		private Hashtable mTweenArgs = null;
@@ -25,7 +28,7 @@ public class EnemyMovement : MonoBehaviour
             Vector3[] aPath = iTweenPath.GetPath(Path);
 
             mPathPercentageByFrame = (Speed / 1000) / aPath.Length;
-
+            mCurrentPathPercentage = pStartPercentage;
             mTweenArgs = new Hashtable();
             mTweenArgs.Add("path", aPath);
             mTweenArgs.Add("speed", Speed);
@@ -57,6 +60,9 @@ public class EnemyMovement : MonoBehaviour
 			mCurrentPathPercentage += mPathPercentageByFrame;
 			if (mCurrentPathPercentage >= 1) {
 				mCurrentPathPercentage = 1f;
+                enabled = false;
+                Destroy(gameObject);
+                OnEnemyInvasion();
 			}
 			iTween.PutOnPath (gameObject, iTweenPath.GetPath (Path), mCurrentPathPercentage);
 		}

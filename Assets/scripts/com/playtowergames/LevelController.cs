@@ -4,11 +4,10 @@ using System.Collections;
 public class LevelController : MonoBehaviour {
 
     public Enemy[] Enemies;
-	public GameObject flag;
-    public string FlagPath;
+    public int Lives = 1;
 	private GameObject aFlagInstance;
-
-
+    private int mInvaders = 0;
+    
     public GameObject GetNewInstanceOfEnemy(EnemyTypesEnum aType)
     {
         Enemy aEnemy = null;
@@ -21,13 +20,16 @@ public class LevelController : MonoBehaviour {
             }
         }
 
-        return Instantiate(aEnemy.EnemyPrefab) as GameObject;
+        GameObject aEnemyInstance = Instantiate(aEnemy.EnemyPrefab) as GameObject;
+        EnemyMovement aEnemyMovement = aEnemyInstance.GetComponent<EnemyMovement>();
+        aEnemyMovement.OnEnemyInvasion += new EnemyMovement.EnemyInvasionHandler(onEnemyInvasion);
+        aEnemyMovement.Speed = Random.Range(aEnemy.MinSpeed, aEnemy.MaxSpeed);
+        return aEnemyInstance;
     }
 
 	// Use this for initialization
 	void Start () {
-		aFlagInstance = Instantiate (flag) as GameObject;
-        iTween.PutOnPath (aFlagInstance, iTweenPath.GetPath (FlagPath), .95f);
+		
 	}
 	
 	// Update is called once per frame
@@ -35,6 +37,10 @@ public class LevelController : MonoBehaviour {
 	
 	}
 
-
+    private void onEnemyInvasion()
+    {
+        mInvaders++;
+        Debug.Log(mInvaders.ToString() + " Invaders");
+    }
 
 }
