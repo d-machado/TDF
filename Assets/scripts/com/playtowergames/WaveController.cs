@@ -63,10 +63,7 @@ public class WaveController : MonoBehaviour {
             string[] keys = new string[aPaths.Count];
             aPaths.Keys.CopyTo(keys, 0);
 
-            Debug.Log("Path Index: " + aPathIndex);
-
             float aStartPercentage = (float)(mRandom.Next(10) / 100f);
-            Debug.Log(aStartPercentage);
             aEnemyMovement.putOnPath(keys[aPathIndex], aStartPercentage);
         }
         mCurrentWaveIndex++;
