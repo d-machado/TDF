@@ -37,7 +37,6 @@ public class LevelController : MonoBehaviour {
 
 		for(int i = 0; i < Towers.Length; i++){
 			Towers[i].OnShowCreationGUIEvent += new TowerFactory.ShowCreationGUIHandler(onShowCreationGUI);
-			Towers[i].OnMouseOutGUIHandler += new TowerFactory.MouseOutGUIHandler(mGuiUpdater.onTowerFactoryMouseOut);
 		}
 	}
 	

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 using System.Collections;
 
 public class GUIUpdater : MonoBehaviour {
@@ -27,16 +28,18 @@ public class GUIUpdater : MonoBehaviour {
 		mLives = aLives;
 	}
 
-	public void onTowerFactoryMouseOut(){
-		if(mTowerCreationGUI){
-			Destroy(mTowerCreationGUI);
-		}
-	}
-
 	public void showConstructionGUI(){
 		if(!mTowerCreationGUI){
 			mTowerCreationGUI = Instantiate(TowerCreationGUIPrefab) as GameObject;
 			mTowerCreationGUI.transform.parent = transform;
+
+            var buttonArray = mTowerCreationGUI.transform.Cast<Transform>().Where(c => c.gameObject.tag == "TowerButtons").Select(c => c.gameObject).ToArray();
+
+            for (int i = 0; i < buttonArray.Length; i++)
+            {
+                GameObject aButton = buttonArray[i];
+                //Add event ToweButton component
+            }
 		}
 	}
 

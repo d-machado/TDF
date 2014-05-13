@@ -6,8 +6,6 @@ public class TowerFactory : MonoBehaviour {
 	public delegate void ShowCreationGUIHandler();
 	public event ShowCreationGUIHandler OnShowCreationGUIEvent;
 
-	public delegate void MouseOutGUIHandler();
-	public event MouseOutGUIHandler OnMouseOutGUIHandler;
 	// Use this for initialization
 	void Start () {
 	
@@ -22,7 +20,4 @@ public class TowerFactory : MonoBehaviour {
 		OnShowCreationGUIEvent();
 	}
 
-	void OnMouseOut(){
-		OnMouseOutGUIHandler();
-	}
 }
