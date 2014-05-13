@@ -28,7 +28,7 @@ public class GUIUpdater : MonoBehaviour {
 		mLives = aLives;
 	}
 
-	public void showConstructionGUI(){
+	public void showConstructionGUI(TowerFactory aTowerFactory){
 		if(!mTowerCreationGUI){
 			mTowerCreationGUI = Instantiate(TowerCreationGUIPrefab) as GameObject;
 			mTowerCreationGUI.transform.parent = transform;
@@ -38,10 +38,23 @@ public class GUIUpdater : MonoBehaviour {
             for (int i = 0; i < buttonArray.Length; i++)
             {
                 GameObject aButton = buttonArray[i];
-                //Add event ToweButton component
+                TowerCreationButton aTCB = aButton.GetComponent<TowerCreationButton>();
+                aTCB.TowerFactory = aTowerFactory;
+                aTCB.onTowerCreationClickEvent += new TowerCreationButton.TowerCreationButtonClickHandler(onTowerCreationButtonClick);
             }
 		}
 	}
+
+    void onTowerCreationButtonClick(Tower aTower, TowerFactory aTowerFactory)
+    {
+        if (mTowerCreationGUI)
+        {
+            Destroy(mTowerCreationGUI);
+            mTowerCreationGUI = null;
+        }
+
+        aTowerFactory.createTower(aTower);
+    } 
 
 	void OnGUI(){
 		GUI.Label(mLivesLabelPosition, "LIVES: " + mLives.ToString());

@@ -45,8 +45,8 @@ public class LevelController : MonoBehaviour {
 	
 	}
 
-	private void onShowCreationGUI(){
-		mGuiUpdater.showConstructionGUI();
+	private void onShowCreationGUI(TowerFactory aTowerFactory){
+		mGuiUpdater.showConstructionGUI(aTowerFactory);
 	}
 
     private void onEnemyInvasion()

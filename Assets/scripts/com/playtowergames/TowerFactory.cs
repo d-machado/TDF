@@ -3,8 +3,14 @@ using System.Collections;
 
 public class TowerFactory : MonoBehaviour {
 
-	public delegate void ShowCreationGUIHandler();
+	public delegate void ShowCreationGUIHandler(TowerFactory aTowerFactory);
 	public event ShowCreationGUIHandler OnShowCreationGUIEvent;
+
+
+    public void createTower(Tower aTower)
+    {
+        GameObject aNewTower = Instantiate(aTower.gameObject) as GameObject;
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +23,7 @@ public class TowerFactory : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		OnShowCreationGUIEvent();
+		OnShowCreationGUIEvent(this);
 	}
 
 }
