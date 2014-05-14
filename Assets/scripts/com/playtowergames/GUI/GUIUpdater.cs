@@ -52,7 +52,7 @@ public class GUIUpdater : MonoBehaviour {
             Destroy(mTowerCreationGUI);
             mTowerCreationGUI = null;
         }
-
+        Debug.Log(aTowerFactory);
         aTowerFactory.createTower(aTower);
     } 
 

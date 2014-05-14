@@ -14,13 +14,15 @@ public class TowerCreationButton : MonoBehaviour {
     {
         set
         {
+            Debug.Log(value);
             mTowerFactory = value;
+            Debug.Log(mTowerFactory);
         }
     }
 
 	// Use this for initialization
 	void Start () {
-        mTowerFactory = null;
+
 	}
 	
 	// Update is called once per frame
@@ -30,6 +32,7 @@ public class TowerCreationButton : MonoBehaviour {
 
     void OnMouseDown()
     {
+        Debug.Log(mTowerFactory);
         onTowerCreationClickEvent(TowerPrefab, mTowerFactory);
     }
 }

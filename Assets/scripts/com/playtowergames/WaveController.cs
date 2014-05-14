@@ -26,8 +26,6 @@ public class WaveController : MonoBehaviour {
     {
 
         if(Waves.Length > 0){
-
-            Wave aWave = Waves[0];
             startWave();
         }
 

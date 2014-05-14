@@ -8,8 +8,7 @@ public class LevelController : MonoBehaviour {
     public int Lives = 1;
 	public GameObject GuiContainer;
 	private GameObject aFlagInstance;
-    private int mInvaders = 0;
-	private GUIUpdater mGuiUpdater;
+    private GUIUpdater mGuiUpdater;
     
     public GameObject GetNewInstanceOfEnemy(EnemyTypesEnum aType)
     {
