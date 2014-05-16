@@ -6,6 +6,12 @@ public class TowerCreationButton : MonoBehaviour {
     public delegate void TowerCreationButtonClickHandler(Tower aTowerType, TowerFactory aTowerFactory);
     public event TowerCreationButtonClickHandler onTowerCreationClickEvent;
 
+    public delegate void TowerCreationButtonOverHandler(Tower aTowerType, TowerFactory aTowerFactory);
+    public event TowerCreationButtonOverHandler onTowerCreationOverEvent;
+
+    public delegate void TowerCreationButtonOutHandler(TowerFactory aTowerFactory);
+    public event TowerCreationButtonOutHandler onTowerCreationOutEvent;
+
     public Tower TowerPrefab;
 
     private TowerFactory mTowerFactory;
@@ -34,5 +40,15 @@ public class TowerCreationButton : MonoBehaviour {
     {
         Debug.Log(mTowerFactory);
         onTowerCreationClickEvent(TowerPrefab, mTowerFactory);
+    }
+
+    void OnMouseEnter()
+    {
+        onTowerCreationOverEvent(TowerPrefab, mTowerFactory);
+    }
+
+    void OnMouseExit()
+    {
+        onTowerCreationOutEvent(mTowerFactory);
     }
 }

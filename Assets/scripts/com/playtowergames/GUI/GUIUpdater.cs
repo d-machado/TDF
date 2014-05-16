@@ -41,9 +41,21 @@ public class GUIUpdater : MonoBehaviour {
                 TowerCreationButton aTCB = aButton.GetComponent<TowerCreationButton>();
                 aTCB.TowerFactory = aTowerFactory;
                 aTCB.onTowerCreationClickEvent += new TowerCreationButton.TowerCreationButtonClickHandler(onTowerCreationButtonClick);
+                aTCB.onTowerCreationOverEvent += new TowerCreationButton.TowerCreationButtonOverHandler(onTowerCreationButtonOver);
+                aTCB.onTowerCreationOutEvent += new TowerCreationButton.TowerCreationButtonOutHandler(onTowerCreationButtonOut);
             }
 		}
 	}
+
+    void onTowerCreationButtonOut(TowerFactory aTowerFactory)
+    {
+        aTowerFactory.hideDamageArea();
+    }
+
+    void onTowerCreationButtonOver(Tower aTower, TowerFactory aTowerFactory)
+    {
+        aTowerFactory.showDamageArea(aTower);
+    }
 
     void onTowerCreationButtonClick(Tower aTower, TowerFactory aTowerFactory)
     {
