@@ -7,6 +7,7 @@ public class TowerFactory : MonoBehaviour {
 	public event ShowCreationGUIHandler OnShowCreationGUIEvent;
 
     public GameObject DamageAreaPrefab;
+    public Tower StartWithTower;
 
     private Tower mCurrentTower = null;
 
@@ -32,12 +33,15 @@ public class TowerFactory : MonoBehaviour {
     public void hideDamageArea()
     {
         Transform aDamageArea = transform.FindChild("DamageArea");
-        Destroy(aDamageArea.gameObject);
+        if (aDamageArea != null) { Destroy(aDamageArea.gameObject); }
     }
 
 	// Use this for initialization
 	void Start () {
-	
+        if (StartWithTower)
+        {
+            createTower(StartWithTower);
+        }
 	}
 	
 	// Update is called once per frame
@@ -46,9 +50,14 @@ public class TowerFactory : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
+        Debug.Log("MOUSE DOWN");
         if (mCurrentTower == null)
         {
-            OnShowCreationGUIEvent(this);
+            Debug.Log("TOWER CLICK");
+            if (OnShowCreationGUIEvent != null) {
+                Debug.Log("Event Exist");
+                OnShowCreationGUIEvent(this); 
+            }
         }
 	}
 
