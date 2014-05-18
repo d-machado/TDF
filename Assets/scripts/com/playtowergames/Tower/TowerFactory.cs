@@ -16,6 +16,7 @@ public class TowerFactory : MonoBehaviour {
         hideDamageArea();
         GameObject aNewTower = Instantiate(aTower.gameObject) as GameObject;
         aNewTower.transform.parent = transform;
+        aNewTower.transform.localPosition = Vector3.zero;
 
         mCurrentTower = aNewTower.GetComponent<Tower>();
     }
@@ -25,6 +26,7 @@ public class TowerFactory : MonoBehaviour {
         GameObject aDamageArea = Instantiate(DamageAreaPrefab) as GameObject;
         aDamageArea.name = "DamageArea";
         aDamageArea.transform.parent = transform;
+        aDamageArea.transform.localPosition = new Vector3(0f, .5f);
     }
 
     public void hideDamageArea()
