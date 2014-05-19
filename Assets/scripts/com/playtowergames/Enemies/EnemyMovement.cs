@@ -17,6 +17,10 @@ public class EnemyMovement : MonoBehaviour
     private Hashtable mTweenArgs = null;
     private float mPathPercentageByFrame = 1f;
     private float mCurrentPathPercentage = 0f;
+    private int mCurrentWaypointIndex = 1;
+    private float _percentageByWaypoint = 0f;
+    private float _percentageUntilNextWaypoint = 0f;
+    private Vector3[] _path;
     private bool mReturning = false;
 
     // Use this for initialization
@@ -33,16 +37,19 @@ public class EnemyMovement : MonoBehaviour
         if (pPath == "") { pPath = Path; }
         Path = pPath;
 
-        Vector3[] aPath = iTweenPath.GetPath(Path);
+        _path = iTweenPath.GetPath(Path);
 
-        mPathPercentageByFrame = (Speed / 1000) / aPath.Length;
+        _percentageByWaypoint = 1f / _path.Length;
+        _percentageUntilNextWaypoint = _percentageByWaypoint;
+        mPathPercentageByFrame = (Speed / 1000) / _path.Length;
         mCurrentPathPercentage = pStartPercentage;
         mTweenArgs = new Hashtable();
-        mTweenArgs.Add("path", aPath);
+        mTweenArgs.Add("path", _path);
         mTweenArgs.Add("speed", Speed);
         mTweenArgs.Add("easetype", iTween.EaseType.linear);
 
-        iTween.PutOnPath(gameObject, aPath, pStartPercentage);
+        iTween.PutOnPath(gameObject, _path, pStartPercentage);
+        
     }
 
     void revertPath()
@@ -76,7 +83,10 @@ public class EnemyMovement : MonoBehaviour
             Destroy(gameObject);
             if (OnEnemyInvasionEvent != null) { OnEnemyInvasionEvent(); }
         }
-        iTween.PutOnPath(gameObject, iTweenPath.GetPath(Path), mCurrentPathPercentage);
+        
+        iTween.PutOnPath(gameObject, _path, mCurrentPathPercentage);
+        Vector3 aTarget = iTween.PointOnPath(_path, mCurrentPathPercentage + .05f);
+        transform.LookAt(aTarget);
     }
 
     void returningUpdate()
@@ -86,6 +96,6 @@ public class EnemyMovement : MonoBehaviour
         {
             mCurrentPathPercentage = 0f;
         }
-        iTween.PutOnPath(gameObject, iTweenPath.GetPath(Path), mCurrentPathPercentage);
+        iTween.PutOnPath(gameObject, _path, mCurrentPathPercentage);
     }
 }
