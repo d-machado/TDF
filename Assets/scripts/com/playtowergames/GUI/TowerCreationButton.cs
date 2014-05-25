@@ -36,18 +36,17 @@ public class TowerCreationButton : MonoBehaviour {
 	
 	}
 
-    void OnMouseDown()
+    public void OnMouseDownMessage()
     {
-        Debug.Log(mTowerFactory);
-        onTowerCreationClickEvent(TowerPrefab, mTowerFactory);
+       onTowerCreationClickEvent(TowerPrefab, mTowerFactory);
     }
 
-    void OnMouseEnter()
+    public void OnMouseEnterMessage()
     {
         onTowerCreationOverEvent(TowerPrefab, mTowerFactory);
     }
 
-    void OnMouseExit()
+    public void OnMouseExitMessage()
     {
         onTowerCreationOutEvent(mTowerFactory);
     }

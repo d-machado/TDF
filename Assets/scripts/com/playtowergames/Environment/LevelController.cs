@@ -6,9 +6,9 @@ public class LevelController : MonoBehaviour {
 	public TowerFactory[] Towers;
 	public EnemyDefinition[] Enemies;
     public int Lives = 1;
-	public GameObject GuiContainer;
 	private GameObject aFlagInstance;
     private GUIUpdater mGuiUpdater;
+    private GameController _gameController;
     
     public GameObject GetNewInstanceOfEnemy(EnemyTypesEnum aType)
     {
@@ -30,7 +30,11 @@ public class LevelController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		mGuiUpdater = GuiContainer.GetComponent<GUIUpdater>();
+
+        _gameController = GameObject.Find("Controller").GetComponent<GameController>();
+        _gameController.showUI(GameUIEnum.GAME);
+
+		mGuiUpdater = _gameController.getCurrentUI().GetComponent<GUIUpdater>();
 		mGuiUpdater.setInitialLives(Lives);
 
 		for(int i = 0; i < Towers.Length; i++){

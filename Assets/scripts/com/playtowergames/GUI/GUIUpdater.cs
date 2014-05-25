@@ -4,15 +4,24 @@ using System.Collections;
 
 public class GUIUpdater : MonoBehaviour {
 
-	public GameObject TowerCreationGUIPrefab;
+	public UIPanel TowerCreationPanel;
+    public UILabel LivesText;
 
-	private Rect mLivesLabelPosition = new Rect(7, 5, 80, 60);
 	private int mLives = 0;
-	private GameObject mTowerCreationGUI = null;
-
+	
 	// Use this for initialization
 	void Start () {
-	
+        TowerCreationPanel.enabled = false;
+        var buttonArray = TowerCreationPanel.transform.Cast<Transform>().Where(c => c.gameObject.tag == "TowerButtons").Select(c => c.gameObject).ToArray();
+
+        for (int i = 0; i < buttonArray.Length; i++)
+        {
+            GameObject aButton = buttonArray[i];
+            TowerCreationButton aTCB = aButton.GetComponent<TowerCreationButton>();
+            aTCB.onTowerCreationClickEvent += new TowerCreationButton.TowerCreationButtonClickHandler(onTowerCreationButtonClick);
+            aTCB.onTowerCreationOverEvent += new TowerCreationButton.TowerCreationButtonOverHandler(onTowerCreationButtonOver);
+            aTCB.onTowerCreationOutEvent += new TowerCreationButton.TowerCreationButtonOutHandler(onTowerCreationButtonOut);
+        }
 	}
 	
 	// Update is called once per frame
@@ -22,14 +31,29 @@ public class GUIUpdater : MonoBehaviour {
 
 	public void setInitialLives(int aLives){
 		mLives = aLives;
+        LivesText.text = "LIVES " + aLives;
 	}
 
 	public void updateLives(int aLives){
 		mLives = aLives;
+        LivesText.text = "LIVES " + aLives;
 	}
 
 	public void showConstructionGUI(TowerFactory aTowerFactory){
-		if(!mTowerCreationGUI){
+        TowerCreationPanel.enabled = true;
+        var buttonArray = TowerCreationPanel.transform.Cast<Transform>().Where(c => c.gameObject.tag == "TowerButtons").Select(c => c.gameObject).ToArray();
+
+        for (int i = 0; i < buttonArray.Length; i++)
+        {
+            GameObject aButton = buttonArray[i];
+            TowerCreationButton aTCB = aButton.GetComponent<TowerCreationButton>();
+            aTCB.TowerFactory = aTowerFactory;
+            /*aTCB.onTowerCreationClickEvent += new TowerCreationButton.TowerCreationButtonClickHandler(onTowerCreationButtonClick);
+            aTCB.onTowerCreationOverEvent += new TowerCreationButton.TowerCreationButtonOverHandler(onTowerCreationButtonOver);
+            aTCB.onTowerCreationOutEvent += new TowerCreationButton.TowerCreationButtonOutHandler(onTowerCreationButtonOut);*/
+        }
+
+		/*if(!mTowerCreationGUI){
 			mTowerCreationGUI = Instantiate(TowerCreationGUIPrefab) as GameObject;
 			mTowerCreationGUI.transform.parent = transform;
 
@@ -44,7 +68,7 @@ public class GUIUpdater : MonoBehaviour {
                 aTCB.onTowerCreationOverEvent += new TowerCreationButton.TowerCreationButtonOverHandler(onTowerCreationButtonOver);
                 aTCB.onTowerCreationOutEvent += new TowerCreationButton.TowerCreationButtonOutHandler(onTowerCreationButtonOut);
             }
-		}
+		}*/
 	}
 
     void onTowerCreationButtonOut(TowerFactory aTowerFactory)
@@ -59,16 +83,8 @@ public class GUIUpdater : MonoBehaviour {
 
     void onTowerCreationButtonClick(Tower aTower, TowerFactory aTowerFactory)
     {
-        if (mTowerCreationGUI)
-        {
-            Destroy(mTowerCreationGUI);
-            mTowerCreationGUI = null;
-        }
-        Debug.Log(aTowerFactory);
+        TowerCreationPanel.enabled = false;
         aTowerFactory.createTower(aTower);
     } 
 
-	void OnGUI(){
-		GUI.Label(mLivesLabelPosition, "LIVES: " + mLives.ToString());
-	}
 }

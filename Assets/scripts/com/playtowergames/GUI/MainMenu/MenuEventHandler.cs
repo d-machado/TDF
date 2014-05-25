@@ -9,6 +9,7 @@ public class MenuEventHandler : MonoBehaviour {
     private Collider _collider;
     void Start()
     {
+        GameController = GameObject.Find("Controller").GetComponent<GameController>();
         _collider = this.collider;
     }
 
