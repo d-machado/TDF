@@ -6,6 +6,7 @@ public class GUIUpdater : MonoBehaviour {
 
 	public UIPanel TowerCreationPanel;
     public UILabel LivesText;
+    public UISprite LifeBarPrefab;
 
 	private int mLives = 0;
 	
@@ -48,28 +49,16 @@ public class GUIUpdater : MonoBehaviour {
             GameObject aButton = buttonArray[i];
             TowerCreationButton aTCB = aButton.GetComponent<TowerCreationButton>();
             aTCB.TowerFactory = aTowerFactory;
-            /*aTCB.onTowerCreationClickEvent += new TowerCreationButton.TowerCreationButtonClickHandler(onTowerCreationButtonClick);
-            aTCB.onTowerCreationOverEvent += new TowerCreationButton.TowerCreationButtonOverHandler(onTowerCreationButtonOver);
-            aTCB.onTowerCreationOutEvent += new TowerCreationButton.TowerCreationButtonOutHandler(onTowerCreationButtonOut);*/
         }
-
-		/*if(!mTowerCreationGUI){
-			mTowerCreationGUI = Instantiate(TowerCreationGUIPrefab) as GameObject;
-			mTowerCreationGUI.transform.parent = transform;
-
-            var buttonArray = mTowerCreationGUI.transform.Cast<Transform>().Where(c => c.gameObject.tag == "TowerButtons").Select(c => c.gameObject).ToArray();
-
-            for (int i = 0; i < buttonArray.Length; i++)
-            {
-                GameObject aButton = buttonArray[i];
-                TowerCreationButton aTCB = aButton.GetComponent<TowerCreationButton>();
-                aTCB.TowerFactory = aTowerFactory;
-                aTCB.onTowerCreationClickEvent += new TowerCreationButton.TowerCreationButtonClickHandler(onTowerCreationButtonClick);
-                aTCB.onTowerCreationOverEvent += new TowerCreationButton.TowerCreationButtonOverHandler(onTowerCreationButtonOver);
-                aTCB.onTowerCreationOutEvent += new TowerCreationButton.TowerCreationButtonOutHandler(onTowerCreationButtonOut);
-            }
-		}*/
 	}
+
+    public void updateEnemyHealthBar(float aLifePercent, Transform aEnemy)
+    {
+        //Debug.Log("--> LIFE: " + aLifePercent);
+        UISprite aLifeBar = Instantiate(LifeBarPrefab) as UISprite;
+        
+        
+    }
 
     void onTowerCreationButtonOut(TowerFactory aTowerFactory)
     {

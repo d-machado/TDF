@@ -10,11 +10,13 @@ public class WaveController : MonoBehaviour {
     private System.Random mRandom = new System.Random();
     private int mCurrentWaveIndex = 0;
 
+    void Awake()
+    {
+        mLevelController = GetComponent<LevelController>();
+    }
+
 	// Use this for initialization
 	void Start () {
-        mLevelController = GetComponent<LevelController>();
-
-        showFirstWave();
 	}
 	
 	// Update is called once per frame
@@ -22,7 +24,7 @@ public class WaveController : MonoBehaviour {
 	
 	}
 
-    private void showFirstWave()
+    public void showFirstWave()
     {
 
         if(Waves.Length > 0){

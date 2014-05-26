@@ -6,9 +6,11 @@ public class LevelController : MonoBehaviour {
 	public TowerFactory[] Towers;
 	public EnemyDefinition[] Enemies;
     public int Lives = 1;
-	private GameObject aFlagInstance;
+	
+    private GameObject aFlagInstance;
     private GUIUpdater mGuiUpdater;
     private GameController _gameController;
+    private WaveController _waveController;
     
     public GameObject GetNewInstanceOfEnemy(EnemyTypesEnum aType)
     {
@@ -25,21 +27,30 @@ public class LevelController : MonoBehaviour {
         GameObject aEnemyInstance = Instantiate(aEnemy.EnemyPrefab) as GameObject;
         EnemyMovement aEnemyMovement = aEnemyInstance.GetComponent<EnemyMovement>();
         aEnemyMovement.OnEnemyInvasionEvent += new EnemyMovement.EnemyInvasionHandler(onEnemyInvasion);
+
+        aEnemyInstance.GetComponent<Enemy>().SetUIController(mGuiUpdater);
+
         return aEnemyInstance;
+    }
+
+    void Awake()
+    {
+        _gameController = GameObject.Find("Controller").GetComponent<GameController>();
+        _waveController = GetComponent<WaveController>();
     }
 
 	// Use this for initialization
 	void Start () {
 
-        _gameController = GameObject.Find("Controller").GetComponent<GameController>();
         _gameController.showUI(GameUIEnum.GAME);
-
-		mGuiUpdater = _gameController.getCurrentUI().GetComponent<GUIUpdater>();
+        
+        mGuiUpdater = _gameController.getCurrentUI().GetComponent<GUIUpdater>();
 		mGuiUpdater.setInitialLives(Lives);
 
 		for(int i = 0; i < Towers.Length; i++){
 			Towers[i].OnShowCreationGUIEvent += new TowerFactory.ShowCreationGUIHandler(onShowCreationGUI);
 		}
+        _waveController.showFirstWave();
 	}
 	
 	// Update is called once per frame
