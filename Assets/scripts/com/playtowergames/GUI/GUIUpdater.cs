@@ -27,7 +27,7 @@ public class GUIUpdater : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    
 	}
 
 	public void setInitialLives(int aLives){
@@ -52,12 +52,22 @@ public class GUIUpdater : MonoBehaviour {
         }
 	}
 
-    public void updateEnemyHealthBar(float aLifePercent, Transform aEnemy)
+    public void destroyLifeBar(UISprite aLifeBar)
+    {
+        Destroy(aLifeBar.gameObject);
+    }
+
+    public void updateEnemyHealthBar(float aLifePercent, Enemy aEnemy)
     {
         //Debug.Log("--> LIFE: " + aLifePercent);
-        UISprite aLifeBar = Instantiate(LifeBarPrefab) as UISprite;
-        
-        
+        if (aEnemy.LifeBar == null)
+        {
+            UISprite aLifeBar = Instantiate(LifeBarPrefab) as UISprite;
+            aLifeBar.transform.parent = transform;
+            aLifeBar.transform.localScale = new Vector3(208,13,1);
+            aLifeBar.transform.position = aEnemy.transform.position;
+            aEnemy.LifeBar = aLifeBar;
+        }
     }
 
     void onTowerCreationButtonOut(TowerFactory aTowerFactory)
