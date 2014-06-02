@@ -6,6 +6,7 @@ public class Tower : MonoBehaviour {
 
     public float RealoadTime = 2f;
     public GameObject Amunition;
+	public int Cost = 10;
 
 	// Use this for initialization
     private List<Transform> _targetsInRange;

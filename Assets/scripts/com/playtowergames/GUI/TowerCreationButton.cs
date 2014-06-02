@@ -15,28 +15,21 @@ public class TowerCreationButton : MonoBehaviour {
     public Tower TowerPrefab;
 
     private TowerFactory mTowerFactory;
+	private TowerConstructionUI _towerCreationGUI;
+
+	public TowerConstructionUI TowerConstruction{
+		set { _towerCreationGUI = value; }
+	}
 
     public TowerFactory TowerFactory
     {
         set
         {
-            Debug.Log(value);
             mTowerFactory = value;
-            Debug.Log(mTowerFactory);
         }
     }
 
-	// Use this for initialization
-	void Start () {
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    public void OnMouseDownMessage()
+	public void OnMouseDownMessage()
     {
        onTowerCreationClickEvent(TowerPrefab, mTowerFactory);
     }

@@ -4,7 +4,7 @@ using System.Collections;
 
 public class GUIUpdater : MonoBehaviour {
 
-	public UIPanel TowerCreationPanel;
+	public TowerConstructionUI TowerCreationPanel;
     public UILabel LivesText;
     public UISprite LifeBarPrefab;
 
@@ -12,7 +12,7 @@ public class GUIUpdater : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-        TowerCreationPanel.enabled = false;
+		TowerCreationPanel.hide();
         var buttonArray = TowerCreationPanel.transform.Cast<Transform>().Where(c => c.gameObject.tag == "TowerButtons").Select(c => c.gameObject).ToArray();
 
         for (int i = 0; i < buttonArray.Length; i++)
@@ -41,7 +41,7 @@ public class GUIUpdater : MonoBehaviour {
 	}
 
 	public void showConstructionGUI(TowerFactory aTowerFactory){
-        TowerCreationPanel.enabled = true;
+		TowerCreationPanel.show ();
         var buttonArray = TowerCreationPanel.transform.Cast<Transform>().Where(c => c.gameObject.tag == "TowerButtons").Select(c => c.gameObject).ToArray();
 
         for (int i = 0; i < buttonArray.Length; i++)
@@ -82,7 +82,7 @@ public class GUIUpdater : MonoBehaviour {
 
     void onTowerCreationButtonClick(Tower aTower, TowerFactory aTowerFactory)
     {
-        TowerCreationPanel.enabled = false;
+		TowerCreationPanel.hide ();
         aTowerFactory.createTower(aTower);
     } 
 

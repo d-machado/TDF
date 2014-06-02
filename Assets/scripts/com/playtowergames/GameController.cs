@@ -14,11 +14,14 @@ public class GameController : MonoBehaviour
     public UIAnchor Anchor;
 
     private UIManager _uiManager;
+	private User _user;
 
     void Awake()
     {
         DontDestroyOnLoad(this);
         
+		_user = new User();
+
         Dictionary<GameUIEnum, UIPanel> aUIPrefabs = new Dictionary<GameUIEnum, UIPanel>();
         aUIPrefabs.Add(GameUIEnum.LOADER, LoadingMessageUIPrefab);
         aUIPrefabs.Add(GameUIEnum.MAIN_MENU, MainMenuUIPrefab);
@@ -26,6 +29,8 @@ public class GameController : MonoBehaviour
 
         _uiManager = new UIManager(Anchor, aUIPrefabs);
     }
+
+	public User getUser(){ return _user; }
 
     public void showUI(GameUIEnum aUIType)
     {

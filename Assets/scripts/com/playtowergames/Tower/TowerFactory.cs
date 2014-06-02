@@ -10,16 +10,27 @@ public class TowerFactory : MonoBehaviour {
     public Tower StartWithTower;
 
     private Tower mCurrentTower = null;
+	private GameController _controller;
+
+	public void Awake(){
+		_controller = GameObject.Find("Controller").GetComponent<GameController>();
+	}
 
     public void createTower(Tower aTower)
     {
+		hideDamageArea();
+		int aCoins = _controller.getUser().Coins;
 
-        hideDamageArea();
-        GameObject aNewTower = Instantiate(aTower.gameObject) as GameObject;
-        aNewTower.transform.parent = transform;
-        aNewTower.transform.localPosition = Vector3.zero;
+		if(aCoins >= aTower.Cost){
+			aCoins -= aTower.Cost;
+			_controller.getUser().Coins = aCoins;
 
-        mCurrentTower = aNewTower.GetComponent<Tower>();
+			GameObject aNewTower = Instantiate(aTower.gameObject) as GameObject;
+			aNewTower.transform.parent = transform;
+			aNewTower.transform.localPosition = Vector3.zero;
+			
+			mCurrentTower = aNewTower.GetComponent<Tower>();
+		}
     }
 
     public void showDamageArea(Tower aTower)
@@ -50,12 +61,9 @@ public class TowerFactory : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-        Debug.Log("MOUSE DOWN");
         if (mCurrentTower == null)
         {
-            Debug.Log("TOWER CLICK");
             if (OnShowCreationGUIEvent != null) {
-                Debug.Log("Event Exist");
                 OnShowCreationGUIEvent(this); 
             }
         }
